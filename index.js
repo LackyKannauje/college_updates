@@ -17,6 +17,10 @@ app.use(timeout);
 const mongoDbUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/school_news";
 connectDB(mongoDbUri);
 
+app.get("/", (req, res) => {
+  res.send("Server is running...");
+})
+
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 
