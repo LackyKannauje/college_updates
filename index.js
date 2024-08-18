@@ -1,13 +1,16 @@
-//routes
 const express = require("express");
 const app = express();
+
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
+
 const connectDB = require("./connect");
-const PORT = process.env.PORT || 8001;
 const cors = require("cors");
 const timeout = require("./middleware/timeout");
+
 require('dotenv').config();
+
+const PORT = process.env.PORT || 8001;
 
 app.use(cors());
 
