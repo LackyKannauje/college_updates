@@ -8,6 +8,7 @@ const {
   handleUserUnFollow,
   handleUserDeleteAccount,
   handleUsersSearching,
+  handleUserViewById,
   handleUserEditProfileInfo,
 } = require("../controllers/user");
 const express = require("express");
@@ -41,7 +42,7 @@ router.delete("/delete", authUser, handleUserDeleteAccount);
 
 //private non-editable
 
-router.get("/:id", authUser, handleUserFollowerList);
+router.get("/:id", authUser, handleUserViewById);
 
 router.get("/search/:username", authUser, handleUsersSearching);
 
