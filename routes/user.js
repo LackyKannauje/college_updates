@@ -3,6 +3,7 @@ const {
   handleUserLogin,
   handleUserRegistration,
   handleUserLogout,
+  handleUserViewById,
   handleUserDoFollowing,
   handleUserFollowerList,
   handleUserUnFollow,
@@ -41,7 +42,7 @@ router.delete("/delete", authUser, handleUserDeleteAccount);
 
 //private non-editable
 
-router.get("/:id", authUser, handleUserFollowerList);
+router.get("/:id", authUser, handleUserViewById);
 
 router.get("/search/:username", authUser, handleUsersSearching);
 
