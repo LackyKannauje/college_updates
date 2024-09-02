@@ -4,6 +4,7 @@ A College platform for sharing and interacting with images, videos, and document
 
 ![Screenshot 2024-08-22 114137](https://github.com/user-attachments/assets/27ce0e2b-1875-4340-8da2-8e754c9e1828) 
 
+<br><br>
 
 <h3>This is the Profile Posts View of Any User Which We can access or view if We are Authenticated, else we can not access the others Posts or Profiles</h3>
 
