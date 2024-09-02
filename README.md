@@ -1,10 +1,12 @@
 A College platform for sharing and interacting with images, videos, and documents. Users can create posts, like, comment, and explore media by category.
 
-<h3>It is the Home Page of the Website Where the Letest Posts are Visible in the front Page Which can be in any format like Video, photos, pdf, and other...
-![Screenshot 2024-08-22 114137](https://github.com/user-attachments/assets/27ce0e2b-1875-4340-8da2-8e754c9e1828) </h3>
+<h3>It is the Home Page of the Website Where the Letest Posts are Visible in the front Page Which can be in any format like Video, photos, pdf, and other...</h3>
+
+![Screenshot 2024-08-22 114137](https://github.com/user-attachments/assets/27ce0e2b-1875-4340-8da2-8e754c9e1828) 
 
 
 <h3>This is the Profile Posts View of Any User Which We can access or view if We are Authenticated, else we can not access the others Posts or Profiles</h3>
+
 ![Screenshot 2024-08-21 144359](https://github.com/user-attachments/assets/c73eccb6-611f-466b-8af4-366e16897d03)
 
 
