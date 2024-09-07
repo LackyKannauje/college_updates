@@ -3,7 +3,6 @@ const {
   handleUserLogin,
   handleUserRegistration,
   handleUserLogout,
-  handleUserViewById,
   handleUserDoFollowing,
   handleUserFollowerList,
   handleUserUnFollow,

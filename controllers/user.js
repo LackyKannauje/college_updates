@@ -220,17 +220,16 @@ async function handleUserFollowerList(req, res) {
 
 async function handleUserFollowingList(req, res) {
   try {
-    // Find the user by ID and populate the 'following' field
+    
     const user = await User.findById(req.params.id).populate(
-      "following", // Populate the following array
-      "username profilePicture" // Return only username and profilePicture of followed users
+      "following", 
+      "username profilePicture"
     );
     
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
 
-    // Return the list of users the current user is following
     res.json(user.following);
   } catch (err) {
     console.error(err.message);
