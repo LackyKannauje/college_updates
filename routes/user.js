@@ -10,6 +10,7 @@ const {
   handleUsersSearching,
   handleUserViewById,
   handleUserEditProfileInfo,
+  handleUserFollowingList,
 } = require("../controllers/user");
 const express = require("express");
 const authUser = require("../middleware/auth");
@@ -48,6 +49,7 @@ router.get("/search/:username", authUser, handleUsersSearching);
 
 router.get("/:id/followers", authUser, handleUserFollowerList);
 
+router.get("/:id/following", authUser, handleUserFollowingList);
 //private editable
 
 router
