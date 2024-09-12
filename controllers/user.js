@@ -162,7 +162,7 @@ async function handleUsersSearching(req, res) {
   try {
     const regex = new RegExp(req.params.username, "i");
     const users = await User.find({ username: regex }).select(
-      "username profilePicture"
+      "username profilePicture bio"
     );
 
     if (users.length === 0) {
@@ -205,7 +205,7 @@ async function handleUserFollowerList(req, res) {
   try {
     const user = await User.findById(req.params.id).populate(
       "followers",
-      "username profilePicture"
+      "username profilePicture bio"
     );
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
@@ -223,7 +223,7 @@ async function handleUserFollowingList(req, res) {
     
     const user = await User.findById(req.params.id).populate(
       "following", 
-      "username profilePicture"
+      "username profilePicture bio"
     );
     
     if (!user) {
