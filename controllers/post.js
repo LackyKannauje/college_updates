@@ -246,6 +246,7 @@ async function handleGetCategoryPosts(req, res) {
     const categoriesType = req.params.type;
     const posts = await Post.find({ "media.type": categoriesType })
       .sort({ createdAt: -1 })
+      .populate('user', 'username bio profilePicture')
       .exec();
 
     res.json(posts);
