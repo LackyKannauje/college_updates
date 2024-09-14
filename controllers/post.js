@@ -146,7 +146,7 @@ async function handleGetPostById(req, res) {
 
 async function handleGetAllPosts(req, res) {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 });
+    const posts = await Post.find().sort({ createdAt: -1 }).populate('user', 'username bio profilePicture');
     res.json(posts);
   } catch (err) {
     console.error(err.message);
@@ -160,7 +160,7 @@ async function handleGetAllPostsByUserId(req, res) {
   try {
     const posts = await Post.find({ user: req.params.id }).sort({
       createdAt: -1,
-    });
+    }).populate('user', 'username bio profilePicture');
     res.json(posts);
   } catch (err) {
     console.error(err.message);
