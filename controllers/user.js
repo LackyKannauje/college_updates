@@ -37,7 +37,7 @@ async function handleUserRegistration(req, res) {
       },
     };
 
-    jwt.sign(payload, secret, { expiresIn: "3d" }, (err, token) => {
+    jwt.sign(payload, secret, { expiresIn: "30d" }, (err, token) => {
       if (err) throw err;
       res.json({ token });
     });
