@@ -211,7 +211,7 @@ async function handlePostRemoveLikeReq(req, res) {
     post.likes.remove({ user: req.user.id });
     await post.save();
 
-    res.json({ message: "Post liked", likes: post.likes });
+    res.json({ message: "Post like deleted", likes: post.likes });
   } catch (err) {
     res.status(500).json({ message: "Error liking post", error: err.message });
   }
@@ -261,7 +261,7 @@ async function handleDeletePostComment(req, res) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    const comment = post.comments.find({ _id: commentId });
+    const comment = post.comments.findById(commentId);
 
     if (!comment) {
       return res.status(404).json({ message: "Comment not found" });
@@ -271,9 +271,8 @@ async function handleDeletePostComment(req, res) {
     await post.save();
 
     res.json({ message: "Comment deleted", comment: comment });
-
-
-  }catch(err){
+  }
+  catch(err){
     res.status(500).json({ message: "Error deleting comment", error: err.message });
   }
 }
