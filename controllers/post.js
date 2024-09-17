@@ -178,8 +178,14 @@ async function handlePostLikeReq(req, res) {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-
-    post.likes += 1;
+    if (post.likes.some((like) => like.user.toString() === req.user.id)) {
+      return res.status(400).json({ message: "Post already liked" });
+    }
+    const newLike = {
+      user: req.user.id,
+      createdAt: new Date(),
+    };
+    post.likes.push(newLike);
     await post.save();
 
     res.json({ message: "Post liked", likes: post.likes });
@@ -196,10 +202,13 @@ async function handlePostRemoveLikeReq(req, res) {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    if (post.likes === 0) {
+    if (post.likes.length === 0) {
       return res.status(400).json({ message: "Post has no likes" });
     }
-    post.likes -= 1;
+    if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
+      return res.status(400).json({ message: "Post not liked yet" });
+    }
+    post.likes.remove({ user: req.user.id });
     await post.save();
 
     res.json({ message: "Post liked", likes: post.likes });
@@ -241,6 +250,34 @@ async function handlePostCommentReq(req, res) {
   }
 }
 
+async function handleDeletePostComment(req, res) {
+  try {
+    const postId = req.params.id;
+    const commentId = req.params.commentId;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const comment = post.comments.find({ _id: commentId });
+
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    post.comments.remove({ _id: commentId });
+    await post.save();
+
+    res.json({ message: "Comment deleted", comment: comment });
+
+
+  }catch(err){
+    res.status(500).json({ message: "Error deleting comment", error: err.message });
+  }
+}
+
 async function handleGetCategoryPosts(req, res) {
   try {
     const categoriesType = req.params.type;
@@ -268,4 +305,5 @@ module.exports = {
   handlePostRemoveLikeReq,
   handlePostCommentReq,
   handleGetCategoryPosts,
+  handleDeletePostComment,
 };

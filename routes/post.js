@@ -12,6 +12,7 @@ const {
   handlePostRemoveLikeReq,
   handlePostCommentReq,
   handleGetCategoryPosts,
+  handleDeletePostComment,
 } = require("../controllers/post");
 const postUpload = require("../config/cloudinaryPost");
 
@@ -35,6 +36,6 @@ router
   .get("/category/:type", authUser, handleGetCategoryPosts)
   .post("/like/:id", authUser, handlePostLikeReq)
   .delete("/like/:id", authUser, handlePostRemoveLikeReq)
-  .post("/comment/:id", authUser, handlePostCommentReq);
+  .post("/comment/:id", authUser, handlePostCommentReq).delete("/comment/:id/:commentId", authUser, handleDeletePostComment);
 
 module.exports = router;

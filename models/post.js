@@ -27,10 +27,18 @@ const postSchema = new Schema({
             required: true,
         },
     }],
-    likes: {
-        type: Number,
-        default: 0,
-    },
+    likes:  [{
+        user:{
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+            unique: true,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        }
+    }],
     comments: [{
         user: {
             type: Schema.Types.ObjectId,
