@@ -146,7 +146,9 @@ async function handleGetPostById(req, res) {
 
 async function handleGetAllPosts(req, res) {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 }).populate('user', 'username bio profilePicture');
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("user", "username bio profilePicture");
     res.json(posts);
   } catch (err) {
     console.error(err.message);
@@ -158,9 +160,11 @@ async function handleGetAllPosts(req, res) {
 
 async function handleGetAllPostsByUserId(req, res) {
   try {
-    const posts = await Post.find({ user: req.params.id }).sort({
-      createdAt: -1,
-    }).populate('user', 'username bio profilePicture');
+    const posts = await Post.find({ user: req.params.id })
+      .sort({
+        createdAt: -1,
+      })
+      .populate("user", "username bio profilePicture");
     res.json(posts);
   } catch (err) {
     console.error(err.message);
@@ -255,25 +259,31 @@ async function handleDeletePostComment(req, res) {
     const postId = req.params.id;
     const commentId = req.params.commentId;
 
-    const post = await Post.findById(postId);
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      { $pull: { comments: { _id: commentId } } },
+      { new: true }
+    );
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    const comment = post.comments.id(commentId);
+    const commentDeleted = post.comments.every(
+      (comment) => comment._id.toString() !== commentId
+    );
 
-    if (!comment) {
-      return res.status(404).json({ message: "Comment not found" });
+    if (!commentDeleted) {
+      return res
+        .status(404)
+        .json({ message: "Comment not found or already deleted" });
     }
 
-    comment.remove();
-    await post.save();
-
-    res.json({ message: "Comment deleted", comment: comment });
-  }
-  catch(err){
-    res.status(500).json({ message: "Error deleting comment", error: err.message });
+    res.json({ message: "Comment deleted successfully" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error deleting comment", error: err.message });
   }
 }
 
@@ -282,7 +292,7 @@ async function handleGetCategoryPosts(req, res) {
     const categoriesType = req.params.type;
     const posts = await Post.find({ "media.type": categoriesType })
       .sort({ createdAt: -1 })
-      .populate('user', 'username bio profilePicture')
+      .populate("user", "username bio profilePicture")
       .exec();
 
     res.json(posts);
@@ -291,7 +301,6 @@ async function handleGetCategoryPosts(req, res) {
     res.status(500).json({ message: "Server error" });
   }
 }
-
 
 module.exports = {
   handlePostUploadFileReq,
