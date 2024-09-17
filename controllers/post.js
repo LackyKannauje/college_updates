@@ -261,13 +261,13 @@ async function handleDeletePostComment(req, res) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    const comment = post.comments.findById(commentId);
+    const comment = post.comments.id(commentId);
 
     if (!comment) {
       return res.status(404).json({ message: "Comment not found" });
     }
 
-    post.comments.remove({ _id: commentId });
+    comment.remove();
     await post.save();
 
     res.json({ message: "Comment deleted", comment: comment });
