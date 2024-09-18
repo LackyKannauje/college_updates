@@ -291,7 +291,7 @@ async function handleGetCommentsByPostId(req, res) {
   try {
     const postId = req.params.id;
 
-    const post = await Post.findById(postId).populate("comments.user", "username profilePicture");
+    const post = await Post.findById(postId).populate("comments.user", "username profilePicture bio");
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
@@ -308,7 +308,7 @@ async function handleGetLikesByPostId(req, res) {
   try {
     const postId = req.params.id;
 
-    const post = await Post.findById(postId).populate("likes.user", "username profilePicture");
+    const post = await Post.findById(postId).populate("likes.user", "username profilePicture bio");
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
