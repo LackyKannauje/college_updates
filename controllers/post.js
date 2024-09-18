@@ -287,6 +287,42 @@ async function handleDeletePostComment(req, res) {
   }
 }
 
+async function handleGetCommentsByPostId(req, res) {
+  try {
+    const postId = req.params.id;
+
+    const post = await Post.findById(postId).populate("comments.user", "username profilePicture");
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.json({ comments: post.comments });
+  } 
+  catch (err) {
+    res.status(500).json({ message: "Error getting comments", error: err.message });
+  }
+}
+
+async function handleGetLikesByPostId(req, res) {
+  try {
+    const postId = req.params.id;
+
+    const post = await Post.findById(postId).populate("likes.user", "username profilePicture");
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.json({ likes: post.likes });
+  } 
+  catch (err) {
+    res.status(500).json({ message: "Error getting likes", error: err.message });
+  }
+}
+
+
+
 async function handleGetCategoryPosts(req, res) {
   try {
     const categoriesType = req.params.type;
@@ -314,4 +350,6 @@ module.exports = {
   handlePostCommentReq,
   handleGetCategoryPosts,
   handleDeletePostComment,
+  handleGetCommentsByPostId,
+  handleGetLikesByPostId
 };
